@@ -1,7 +1,5 @@
 # 16 Personalities
 
-[English version](README.en.md)
-
 Sitio informativo sobre los 16 tipos de personalidad MBTI, construido con Vite, React, TypeScript, React Router y Tailwind CSS.
 
 ## Ejecutar en local
