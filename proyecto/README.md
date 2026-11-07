@@ -50,11 +50,12 @@ El diálogo de envío del formulario es la versión honesta.
 ```text
 src/
 ├── components/
+│   ├── collection/    # EmptyCollection
 │   ├── contact/       # ContactForm, FormField
 │   ├── home/          # GroupWheel, DimensionsSection, DimensionCard
 │   ├── layout/        # AppLayout, Navigation, Footer, Logo, ThemeToggle
-│   ├── personality/   # PersonalityCard, PersonalityGrid, GroupFilters
-│   └── ui/            # ConfirmDialog, Toast, ResultStatus, SearchField, SectionHeading
+│   ├── personality/   # PersonalityCard, PersonalityGrid, GroupFilters, DimensionFilterPopover
+│   └── ui/            # Button, ToggleButton, ConfirmDialog, Toast, ErrorState, ResultStatus, SearchField, SectionHeading
 ├── constants/         # Datos estáticos de la interfaz (dimensiones MBTI)
 ├── context/           # CollectionContext, ConfirmContext, ToastContext
 ├── hooks/             # useFetch, useLocalStorage, useTheme, useCollectionActions
@@ -71,6 +72,8 @@ src/
 - **`App.tsx` solo enruta.** El layout compartido vive en `AppLayout` y usa `<Outlet />`.
 - **Estado global en contextos.** La colección (`CollectionContext`) está por encima del router para persistir entre rutas. Los toasts y las confirmaciones se piden desde cualquier componente con `useToast()` y `useConfirm()`; este último devuelve una promesa (`true` si se confirmó).
 - **Hooks reutilizables.** `useFetch` centraliza loading, error y cancelación con `AbortController`; `useLocalStorage` tolera un almacenamiento bloqueado o corrupto.
+- **Estilos con Tailwind v4.** Los colores del tema se declaran como tokens en `@theme` (`bg-surface`, `text-muted`, `border-line`, `bg-accent`...) y apuntan a variables CSS, así que el modo claro/oscuro cambia solo. Los colores de cada grupo MBTI son utilidades `tone-*` (`@utility`) que exponen `bg-tone-soft` y `text-tone-strong`. Los botones se reutilizan con `Button`, `LinkButton` y `ToggleButton`.
+- **`useFetch` con `async/await`**, estados de loading, error y vacío, y cancelación con `AbortController`.
 - **Nombres en inglés** en todo el código (carpetas, componentes, funciones y variables).
 
 ## Despliegue

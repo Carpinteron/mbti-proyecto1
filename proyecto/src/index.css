@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
-/* ===== Paleta MBTI =====
-   Base neutra (crema / azul-gris) + un color apagado por grupo:
-   Analysts lavanda · Diplomats salvia · Sentinels azul cielo · Explorers mantequilla.
-   El rosa es el único acento. Dark Mode guide: tokens en :root,
-   tema con data-theme y prefers-color-scheme como respaldo. */
+/* ===== MBTI palette =====
+   Neutral base (cream / blue-gray) + one muted color per group:
+   Analysts lavender · Diplomats sage · Sentinels sky blue · Explorers butter.
+   Pink is the single accent. Dark mode: raw tokens live on :root, the theme is
+   switched with data-theme, and prefers-color-scheme is the fallback. */
 
 :root {
   color-scheme: light;
-  /* Base neutra */
+  /* Neutral base */
   --page-bg:   hsl(40 30% 97%);
   --surface:   hsl(40 20% 100%);
   --surface-2: hsl(40 20% 93%);
@@ -16,7 +16,7 @@
   --muted:     hsl(228 10% 40%);
   --border:    hsl(230 20% 14% / 0.12);
   --shadow:    hsl(230 30% 20% / 0.12);
-  /* Navbar y footer */
+  /* Navbar and footer */
   --chrome:    hsl(230 25% 14%);
   --on-chrome: hsl(40 30% 97%);
   /* Single accent: actions, links and collection */
@@ -25,11 +25,8 @@
   --danger:    hsl(340 48% 55%);
   /* Feedback states (toasts, validation) */
   --success:   hsl(152 55% 32%);
-  --success-soft: hsl(150 50% 94%);
-  --danger-soft:  hsl(340 55% 96%);
   --info:      hsl(212 70% 42%);
-  --info-soft: hsl(210 80% 95%);
-  /* Grupos MBTI: fondo suave + tono fuerte */
+  /* MBTI groups: soft background + strong tone */
   --analysts-soft:   hsl(265 45% 92%);  --analysts-strong:  hsl(265 35% 42%);
   --diplomats-soft:  hsl(150 35% 90%);  --diplomats-strong: hsl(150 35% 30%);
   --sentinels-soft:  hsl(200 50% 91%);  --sentinels-strong: hsl(200 45% 33%);
@@ -37,7 +34,7 @@
   --on-group:  hsl(0 0% 100%);
 }
 
-/* Oscuro elegido por el usuario */
+/* Dark theme chosen by the user */
 [data-theme="dark"] {
   color-scheme: dark;
   --page-bg:   hsl(225 20% 10%);
@@ -53,10 +50,7 @@
   --on-accent: hsl(225 20% 10%);
   --danger:    hsl(340 58% 72%);
   --success:   hsl(150 55% 65%);
-  --success-soft: hsl(152 30% 16%);
-  --danger-soft:  hsl(340 28% 20%);
   --info:      hsl(210 85% 72%);
-  --info-soft: hsl(212 35% 18%);
   --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);
   --diplomats-soft:  hsl(150 20% 20%);  --diplomats-strong: hsl(150 45% 72%);
   --sentinels-soft:  hsl(200 25% 20%);  --sentinels-strong: hsl(200 60% 75%);
@@ -64,7 +58,7 @@
   --on-group:  hsl(225 20% 10%);
 }
 
-/* Oscuro por preferencia del sistema (si el usuario no ha elegido) */
+/* Dark by system preference (when the user has not chosen a theme) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     color-scheme: dark;
@@ -80,11 +74,8 @@
     --accent:    hsl(340 80% 70%);
     --on-accent: hsl(225 20% 10%);
     --danger:    hsl(340 58% 72%);
-  --success:   hsl(150 55% 65%);
-  --success-soft: hsl(152 30% 16%);
-  --danger-soft:  hsl(340 28% 20%);
-  --info:      hsl(210 85% 72%);
-  --info-soft: hsl(212 35% 18%);
+    --success:   hsl(150 55% 65%);
+    --info:      hsl(210 85% 72%);
     --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);
     --diplomats-soft:  hsl(150 20% 20%);  --diplomats-strong: hsl(150 45% 72%);
     --sentinels-soft:  hsl(200 25% 20%);  --sentinels-strong: hsl(200 60% 75%);
@@ -93,11 +84,57 @@
   }
 }
 
-/* Every element with .tone-x exposes --g-soft / --g-strong */
-.tone-analysts  { --g-soft: var(--analysts-soft);  --g-strong: var(--analysts-strong); }
-.tone-diplomats { --g-soft: var(--diplomats-soft); --g-strong: var(--diplomats-strong); }
-.tone-sentinels { --g-soft: var(--sentinels-soft); --g-strong: var(--sentinels-strong); }
-.tone-explorers { --g-soft: var(--explorers-soft); --g-strong: var(--explorers-strong); }
+/* `dark:` variant that follows the same data-theme switch as the tokens above. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ===== Tailwind tokens =====
+   `inline` keeps the utilities pointing at the runtime variables, so
+   bg-surface / text-muted / border-line switch with the theme automatically. */
+@theme inline {
+  --color-page: var(--page-bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-chrome: var(--chrome);
+  --color-on-chrome: var(--on-chrome);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  /* Group colors, set per element by the tone-* utilities below */
+  --color-tone-soft: var(--tone-soft);
+  --color-tone-strong: var(--tone-strong);
+  --color-on-tone: var(--on-group);
+
+  --shadow-pop: 0 8px 24px -6px var(--shadow);
+  --shadow-lift: 0 18px 45px var(--shadow);
+}
+
+@theme {
+  --animate-toast-in: toast-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-popover-in: popover-in 0.16s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-wheel-spin: wheel-spin 75s linear infinite;
+
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  }
+  @keyframes popover-in {
+    from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  }
+  @keyframes wheel-spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+/* Group tones: an element with tone-x exposes --tone-soft / --tone-strong,
+   which Tailwind reads as bg-tone-soft, text-tone-strong, border-tone-strong... */
+@utility tone-analysts  { --tone-soft: var(--analysts-soft);  --tone-strong: var(--analysts-strong); }
+@utility tone-diplomats { --tone-soft: var(--diplomats-soft); --tone-strong: var(--diplomats-strong); }
+@utility tone-sentinels { --tone-soft: var(--sentinels-soft); --tone-strong: var(--sentinels-strong); }
+@utility tone-explorers { --tone-soft: var(--explorers-soft); --tone-strong: var(--explorers-strong); }
 
 .dimension-split-left {
   clip-path: polygon(0 0, 100% 0, calc(100% - 2rem) 100%, 0 100%);
@@ -113,7 +150,7 @@ body {
   background: var(--page-bg);
   color: var(--text);
   font-family: "DM Sans", sans-serif;
-  transition: background-color .3s, color .3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button, input, textarea { font: inherit; color: inherit; }
@@ -124,66 +161,10 @@ dialog::backdrop {
   backdrop-filter: blur(8px);
 }
 
-/* Toast: entra desde abajo y barra de progreso del auto-dismiss */
-@keyframes toast-in { from { opacity: 0; transform: translateY(16px) scale(.97); } }
-@keyframes toast-progress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
-.toast-in { animation: toast-in .28s cubic-bezier(.2,.8,.2,1) both; }
-.toast-progress { transform-origin: left; animation: toast-progress linear forwards; }
-.toast-paused .toast-progress { animation-play-state: paused; }
-
-/* Modal: aparece con un leve zoom */
-@keyframes dialog-in { from { opacity: 0; transform: translateY(8px) scale(.96); } }
-dialog[open] { animation: dialog-in .22s cubic-bezier(.2,.8,.2,1); }
+/* Native confirmation dialog: appears with a slight zoom */
+@keyframes dialog-in { from { opacity: 0; transform: translateY(8px) scale(0.96); } }
+dialog[open] { animation: dialog-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
 @media (prefers-reduced-motion: reduce) {
-  .toast-in, dialog[open] { animation: none; }
+  dialog[open] { animation: none; }
 }
-
-/* Ruleta del header: tambor 3D de 4 caras que gira */
-@keyframes roulette {
-  0%, 18%   { transform: rotateX(0deg); }
-  25%, 43%  { transform: rotateX(90deg); }
-  50%, 68%  { transform: rotateX(180deg); }
-  75%, 93%  { transform: rotateX(270deg); }
-  100%      { transform: rotateX(360deg); }
-}
-.roulette { perspective: 400px; }
-.roulette-drum { position: relative; height: 100%; transform-style: preserve-3d; animation: roulette 8s cubic-bezier(.6,-0.3,.4,1.3) infinite; }
-.roulette-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; backface-visibility: hidden; }
-.no-scrollbar { scrollbar-width: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-
-
-@media (prefers-reduced-motion: reduce) {
-  .roulette-drum, .spin-slow { animation: none; }
-}
-
-/* Ruleta del navbar: el tono del grupo que contrasta con la barra */
-.roulette-track li { color: var(--g-soft); }
-[data-theme="dark"] .roulette-track li { color: var(--g-strong); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .roulette-track li { color: var(--g-strong); }
-}
-
-/* Aro del fondo del home: gira lento como una ruleta */
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-.spin-slow { animation: spin-slow 60s linear infinite; transform-origin: center; }
-@media (prefers-reduced-motion: reduce) { .spin-slow { animation: none; } }
-
-/* Hero: entrada blur + fade del texto de cada grupo */
-@keyframes blur-fade { from { opacity: 0; filter: blur(10px); transform: translateY(6px); } }
-.blur-fade { animation: blur-fade 1.6s ease both; }
-@media (prefers-reduced-motion: reduce) { .blur-fade { animation: none; } }
-
-/* Nombre del grupo en el arco: recorre la circunferencia despacio al entrar */
-@keyframes arc-text-in {
-  from { opacity: 0; transform: rotate(-35deg); filter: blur(4px); }
-  to   { opacity: 1; transform: rotate(0deg);   filter: blur(0); }
-}
-.arc-text-in { transform-box: view-box; transform-origin: 350px 350px; animation: arc-text-in 4s cubic-bezier(.45,0,.25,1) both; }
-@media (prefers-reduced-motion: reduce) { .arc-text-in { animation: none; } }
-
-/* Home wheel: a single continuous rotation for segments + labels */
-@keyframes wheel-spin { to { transform: rotate(360deg); } }
-.wheel-spin { transform-box: view-box; transform-origin: 350px 350px; animation: wheel-spin 75s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .wheel-spin { animation: none; } }

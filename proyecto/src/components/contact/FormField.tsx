@@ -21,7 +21,7 @@ function FormField({ id, label, error, aside, children }: Props) {
       </div>
       {children}
       {error && (
-        <p id={`${id}-error`} className="flex items-center gap-1.5 text-xs font-medium text-[var(--danger)]">
+        <p id={`${id}-error`} className="flex items-center gap-1.5 text-xs font-medium text-danger">
           <svg viewBox="0 0 24 24" className="size-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8v4m0 4h.01" /></svg>
           {error}
         </p>

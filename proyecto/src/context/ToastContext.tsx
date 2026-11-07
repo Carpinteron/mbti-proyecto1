@@ -20,7 +20,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      {toast && <Toast key={toast.id} toast={toast} onClose={closeToast} />}
+      {/* Fixed live region: it stays in the DOM so screen readers announce each toast reliably. */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="pointer-events-none fixed inset-x-3 bottom-3 z-50 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[26rem]"
+      >
+        {toast && <Toast key={toast.id} toast={toast} onClose={closeToast} />}
+      </div>
     </ToastContext.Provider>
   );
 }

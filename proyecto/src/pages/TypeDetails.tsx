@@ -6,12 +6,13 @@ import { useCollection } from '../context/CollectionContext';
 import { useCollectionActions } from '../hooks/useCollectionActions';
 import ResultStatus from '../components/ui/ResultStatus';
 import ErrorState from '../components/ui/ErrorState';
-import { GROUP_LABELS, getGroup } from '../utils/groups';
+import { Button, LinkButton } from '../components/ui/Button';
+import { GROUP_LABELS, TONE_CLASS, getGroup } from '../utils/groups';
 
 function Bloque({ eyebrow, title, children }: { eyebrow: string; title: string; children: ReactNode }) {
   return (
-    <section className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6">
-      <span className="text-xs font-bold tracking-widest text-[var(--g-strong)]">{eyebrow}</span>
+    <section className="rounded-xl border border-line bg-surface p-6">
+      <span className="text-xs font-bold tracking-widest text-tone-strong">{eyebrow}</span>
       <h2 className="my-3 text-2xl font-bold">{title}</h2>
       {children}
     </section>
@@ -31,48 +32,44 @@ function TypeDetails() {
         title="We could not load this personality"
         message="It may not exist, or the connection failed. Try again in a moment or explore the other types."
       >
-        <Link
-          to="/types"
-          className="rounded-full bg-[var(--accent)] px-10 py-4 font-bold text-[var(--on-accent)] shadow-lg transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-        >
-          Explore the types →
-        </Link>
+        <LinkButton to="/types">Explore the types →</LinkButton>
       </ErrorState>
     );
   }
 
   const group = getGroup(type.code);
   const saved = isSaved(type.code);
-  const listClass = 'list-disc space-y-2 pl-5 text-[var(--muted)] marker:text-[var(--g-strong)]';
+  const listClass = 'list-disc space-y-2 pl-5 text-muted marker:text-tone-strong';
 
   return (
-    <article className={`tone-${group}`}>
-      <Link className="text-sm font-bold text-[var(--accent)] hover:underline" to="/types">← Back to explore</Link>
+    <article className={TONE_CLASS[group]}>
+      <Link className="text-sm font-bold text-accent hover:underline" to="/types">← Back to explore</Link>
 
-      <header className="my-8 flex flex-wrap items-center gap-6 rounded-xl border border-[var(--border)] bg-gradient-to-r from-[var(--g-soft)] to-[var(--surface)] p-8">
-        <strong className="text-5xl tracking-tight text-[var(--g-strong)]">{type.code}</strong>
+      <header className="my-8 flex flex-wrap items-center gap-6 rounded-xl border border-line bg-gradient-to-r from-tone-soft to-surface p-8">
+        <strong className="text-5xl tracking-tight text-tone-strong">{type.code}</strong>
         <div>
-          <span className="text-xs font-bold tracking-widest text-[var(--g-strong)]">{GROUP_LABELS[group].toUpperCase()} · {type.title}</span>
+          <span className="text-xs font-bold tracking-widest text-tone-strong">{GROUP_LABELS[group].toUpperCase()} · {type.title}</span>
           <h1 className="text-5xl font-bold">{type.name}</h1>
         </div>
-        <button
-          type="button"
+        <Button
+          variant={saved ? 'solid' : 'outline'}
+          size="pill"
           aria-pressed={saved}
-          className={`ml-auto rounded-full px-5 py-2 font-bold transition hover:-translate-y-0.5 ${saved ? 'bg-[var(--accent)] text-[var(--on-accent)]' : 'border border-[var(--accent)] text-[var(--accent)]'}`}
+          className="ml-auto hover:-translate-y-0.5"
           onClick={() => toggle(type.code)}
         >
           {saved ? '★ Saved' : '☆ Save'}
-        </button>
+        </Button>
       </header>
 
       <div className="grid gap-8 md:grid-cols-2">
         <Bloque eyebrow="THEIR ESSENCE" title="How their mind works">
-          <p className="leading-7 text-[var(--muted)]">{type.cognitive}</p>
+          <p className="leading-7 text-muted">{type.cognitive}</p>
         </Bloque>
         <Bloque eyebrow="STRENGTHS" title="What drives them">
           <div className="flex flex-wrap gap-2">
             {type.strengths.map((item) => (
-              <span key={item} className="rounded-full bg-[var(--g-soft)] px-3 py-2 text-sm text-[var(--text)]">{item}</span>
+              <span key={item} className="rounded-full bg-tone-soft px-3 py-2 text-sm text-fg">{item}</span>
             ))}
           </div>
         </Bloque>

@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { Button } from '../ui/Button';
 import FormField, { type FieldState } from './FormField';
 import { useConfirm } from '../../context/ConfirmContext';
 import { useToast } from '../../context/ToastContext';
@@ -26,11 +27,11 @@ function ContactForm() {
   }
 
   function inputClass(field: ContactField) {
-    const base = 'w-full rounded-xl border bg-[var(--surface)] px-4 py-3 text-base text-[var(--text)] outline-none transition placeholder:text-[var(--muted)]/70 focus:ring-4 sm:text-sm';
+    const base = 'w-full rounded-xl border bg-surface px-4 py-3 text-base text-fg outline-none transition placeholder:text-muted/70 focus:ring-4 sm:text-sm';
     const state = stateOf(field);
-    if (state === 'error') return `${base} border-[var(--danger)] focus:ring-[var(--danger)]/20`;
-    if (state === 'ok') return `${base} border-[var(--success)] focus:ring-[var(--success)]/20`;
-    return `${base} border-[var(--border)] focus:border-[var(--accent)] focus:ring-[var(--accent)]/20`;
+    if (state === 'error') return `${base} border-danger focus:ring-danger/20`;
+    if (state === 'ok') return `${base} border-success focus:ring-success/20`;
+    return `${base} border-line focus:border-accent focus:ring-accent/20`;
   }
 
   const controlProps = (field: ContactField) => ({
@@ -39,7 +40,7 @@ function ContactForm() {
     value: form[field],
     required: true,
     onBlur: () => touch(field),
-    onChange: (event: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => change(field, event.target.value),
+    onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => change(field, event.target.value),
     'aria-invalid': stateOf(field) === 'error',
     'aria-describedby': stateOf(field) === 'error' ? `${field}-error` : undefined,
     className: inputClass(field),
@@ -79,10 +80,10 @@ function ContactForm() {
   const length = form.message.length;
 
   return (
-    <form className="grid gap-5 rounded-3xl border border-[var(--border)] bg-[var(--surface)]/60 p-5 shadow-lg sm:p-8" onSubmit={handleSubmit} noValidate>
+    <form className="grid gap-5 rounded-3xl border border-line bg-surface/60 p-5 shadow-lg sm:p-8" onSubmit={handleSubmit} noValidate>
       <div>
         <h2 className="text-2xl font-bold">Contact us</h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">All fields are required.</p>
+        <p className="mt-1 text-sm text-muted">All fields are required.</p>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <FormField id="name" label="Name" error={errorOf('name')}>
@@ -97,20 +98,16 @@ function ContactForm() {
         label="Message"
         error={errorOf('message')}
         aside={
-          <span className={`text-xs font-medium tabular-nums ${length > 0 && length < MIN_MESSAGE_LENGTH ? 'text-[var(--danger)]' : 'text-[var(--muted)]'}`} aria-hidden="true">
+          <span className={`text-xs font-medium tabular-nums ${length > 0 && length < MIN_MESSAGE_LENGTH ? 'text-danger' : 'text-muted'}`} aria-hidden="true">
             {length}/{MAX_MESSAGE_LENGTH}
           </span>
         }
       >
         <textarea {...controlProps('message')} rows={5} maxLength={MAX_MESSAGE_LENGTH} placeholder="Tell us what is on your mind..." className={`${inputClass('message')} min-h-32 resize-y`} />
       </FormField>
-      <button
-        type="submit"
-        disabled={!isValid}
-        className="w-full rounded-xl bg-[var(--accent)] px-5 py-3.5 font-bold text-[var(--on-accent)] shadow-md transition hover:brightness-110 active:scale-[.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100 sm:w-auto sm:justify-self-end sm:px-8"
-      >
+      <Button type="submit" size="md" disabled={!isValid} className="active:scale-[.99] sm:w-auto sm:justify-self-end sm:px-8" block>
         Send message
-      </button>
+      </Button>
     </form>
   );
 }

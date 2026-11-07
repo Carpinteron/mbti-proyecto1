@@ -4,8 +4,8 @@ import Logo from './Logo';
 import { useCollection } from '../../context/CollectionContext';
 import { useTheme } from '../../hooks/useTheme';
 
-const navLink = 'rounded-full px-3 py-1.5 transition hover:bg-[var(--on-chrome)]/10 [&.active]:bg-[var(--on-chrome)] [&.active]:text-[var(--chrome)]';
-const bar = 'flex h-14 items-center rounded-full border border-[var(--border)] bg-[var(--chrome)]/80 text-[var(--on-chrome)] shadow-lg backdrop-blur-md';
+const navLink = 'rounded-full px-3 py-1.5 transition hover:bg-on-chrome/10 [&.active]:bg-on-chrome [&.active]:text-chrome';
+const bar = 'flex h-14 items-center rounded-full border border-line bg-chrome/80 text-on-chrome shadow-lg backdrop-blur-md';
 
 function Navigation() {
   const { collection } = useCollection();
@@ -24,7 +24,7 @@ function Navigation() {
             <NavLink className={navLink} to="/" end>Home</NavLink>
             <NavLink className={navLink} to="/types">Explore</NavLink>
             <NavLink className={navLink} to="/collection">
-              Collection {total > 0 && <span className="ml-1 rounded-full bg-[var(--accent)] px-1.5 py-0.5 text-[10px] tracking-normal text-[var(--on-accent)]">{total}</span>}
+              Collection {total > 0 && <span className="ml-1 rounded-full bg-accent px-1.5 py-0.5 text-[10px] tracking-normal text-on-accent">{total}</span>}
             </NavLink>
             <NavLink className={navLink} to="/contact">Contact</NavLink>
           </nav>

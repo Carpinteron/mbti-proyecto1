@@ -5,7 +5,8 @@ import { useFetch } from '../hooks/useFetch';
 import { useCollection } from '../context/CollectionContext';
 import { useCollectionActions } from '../hooks/useCollectionActions';
 import ResultStatus from '../components/ui/ResultStatus';
-import { getGroup } from '../utils/groups';
+import { Button } from '../components/ui/Button';
+import { TONE_CLASS, getGroup } from '../utils/groups';
 
 function Collection() {
   const { collection } = useCollection();
@@ -17,7 +18,7 @@ function Collection() {
   return (
     <section>
       <h1 className="text-5xl font-bold">Collection</h1>
-      {collection.length > 0 && <p className="my-3 text-[var(--muted)]">Profiles to revisit whenever you want.</p>}
+      {collection.length > 0 && <p className="my-3 text-muted">Profiles to revisit whenever you want.</p>}
 
       {collection.length === 0 ? (
         <EmptyCollection />
@@ -28,20 +29,21 @@ function Collection() {
       ) : (
         <ul className="grid gap-3">
           {saved.map((type) => (
-            <li key={type.code} className={`tone-${getGroup(type.code)} flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3`}>
-              <div className="grid h-20 w-28 place-items-center rounded-lg bg-[var(--g-soft)] text-xl font-bold tracking-wider text-[var(--g-strong)]" aria-hidden="true">{type.code}</div>
+            <li key={type.code} className={`${TONE_CLASS[getGroup(type.code)]} flex items-center gap-4 rounded-xl border border-line bg-surface p-3`}>
+              <div className="grid h-20 w-28 place-items-center rounded-lg bg-tone-soft text-xl font-bold tracking-wider text-tone-strong" aria-hidden="true">{type.code}</div>
               <div className="flex-1">
-                <h2 className="font-bold"><Link className="hover:text-[var(--g-strong)]" to={`/types/${type.code}`}>{type.name}</Link></h2>
-                <p className="text-sm text-[var(--muted)]">{type.title}</p>
+                <h2 className="font-bold"><Link className="hover:text-tone-strong" to={`/types/${type.code}`}>{type.name}</Link></h2>
+                <p className="text-sm text-muted">{type.title}</p>
               </div>
-              <button
-                type="button"
-                className="rounded-md border border-[var(--danger)]/40 px-3 py-2 text-sm text-[var(--danger)] hover:bg-[var(--danger)]/10"
+              <Button
+                variant="outline"
+                color="danger"
+                size="sm"
                 aria-label={`Remove ${type.name} from collection`}
                 onClick={() => void requestRemove(type.code)}
               >
                 Remove
-              </button>
+              </Button>
             </li>
           ))}
         </ul>

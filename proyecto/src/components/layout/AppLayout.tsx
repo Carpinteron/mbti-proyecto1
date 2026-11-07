@@ -8,7 +8,7 @@ function AppLayout() {
   const verticalPadding = pathname === '/contact' ? 'py-4' : 'py-12';
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-clip bg-[var(--page-bg)] text-[var(--text)]">
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-page text-fg">
       <Navigation />
       <main className={`mx-auto w-full max-w-7xl flex-1 px-2 sm:px-4 lg:px-6 ${verticalPadding}`}>
         <Outlet />

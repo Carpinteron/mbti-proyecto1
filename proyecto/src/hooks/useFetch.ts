@@ -16,15 +16,22 @@ export function useFetch<T>(fetcher: (signal: AbortSignal) => Promise<T>, key: s
 
   useEffect(() => {
     const controller = new AbortController();
-    setState({ data: null, status: 'loading' });
-    fetcher(controller.signal)
-      .then((data) => setState({ data, status: 'success' }))
-      .catch((error: Error) => {
-        if (error.name !== 'AbortError') setState({ data: null, status: 'error' });
-      });
+
+    async function load() {
+      setState({ data: null, status: 'loading' });
+      try {
+        const data = await fetcher(controller.signal);
+        setState({ data, status: 'success' });
+      } catch (error) {
+        // An aborted request means the component left or the key changed: not an error for the UI.
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        setState({ data: null, status: 'error' });
+      }
+    }
+
+    void load();
     return () => controller.abort();
-    // `key` identifies the request; `fetcher` is intentionally not a dependency.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // `key` identifies the request; `fetcher` is a new function on every render, so it is left out on purpose.
   }, [key]);
 
   return state;

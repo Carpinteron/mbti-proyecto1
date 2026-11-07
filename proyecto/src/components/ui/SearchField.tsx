@@ -7,9 +7,9 @@ function SearchField({ value, onChange }: Props) {
   return (
     <label className="relative block w-full sm:w-52">
       <span className="sr-only">Search personalities</span>
-      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]">⌕</span>
+      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted">⌕</span>
       <input
-        className="w-full rounded-md border border-[var(--border)] bg-[var(--surface)] py-2 pl-8 pr-3 text-sm text-[var(--text)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent)]"
+        className="w-full rounded-md border border-line bg-surface py-2 pl-8 pr-3 text-sm text-fg outline-none placeholder:text-muted focus:border-accent"
         aria-label="Search personalities"
         placeholder="Search type..."
         value={value}

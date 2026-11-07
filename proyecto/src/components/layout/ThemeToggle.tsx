@@ -12,7 +12,7 @@ function ThemeToggle({ theme, onToggle }: Props) {
       type="button"
       onClick={onToggle}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      className="grid size-10 shrink-0 place-items-center rounded-full border border-[var(--border)] bg-[var(--on-chrome)]/10 p-0 text-sm leading-none text-[var(--on-chrome)] transition hover:bg-[var(--on-chrome)]/20"
+      className="grid size-10 shrink-0 place-items-center rounded-full border border-line bg-on-chrome/10 p-0 text-sm leading-none text-on-chrome transition hover:bg-on-chrome/20"
     >
       {isDark ? '☼' : '☾'}
     </button>

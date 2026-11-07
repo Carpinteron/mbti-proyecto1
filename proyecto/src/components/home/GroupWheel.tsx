@@ -1,4 +1,4 @@
-import { GROUP_KEYS, GROUP_LABELS } from '../../utils/groups';
+import { GROUP_KEYS, GROUP_LABELS, TONE_CLASS } from '../../utils/groups';
 
 const BRAIN_IMAGE = '/Imagen3.png';
 
@@ -18,19 +18,19 @@ function GroupWheel() {
           {/* Circle through the middle of the stroke; starts on the left, clockwise. */}
           <path id="wheel-path" d="M 65 350 A 285 285 0 1 1 635 350 A 285 285 0 1 1 65 350" />
         </defs>
-        <g className="wheel-spin">
+        <g className="animate-wheel-spin motion-reduce:animate-none [transform-box:view-box] origin-[350px_350px]">
           <g transform="rotate(180 350 350)">
             {GROUP_KEYS.map((group, i) => (
               <circle
                 key={group}
-                className={`tone-${group} stroke-[var(--g-strong)]`}
+                className={`${TONE_CLASS[group]} stroke-tone-strong`}
                 cx="350" cy="350" r={RADIUS} fill="none" strokeWidth="72"
                 strokeDasharray={`${QUARTER - GAP} ${CIRCUMFERENCE}`}
                 strokeDashoffset={-i * QUARTER}
               />
             ))}
           </g>
-          <text dominantBaseline="central" className="fill-[var(--on-group)] text-[34px] font-bold tracking-[.14em]">
+          <text dominantBaseline="central" className="fill-on-tone text-[34px] font-bold tracking-[.14em]">
             {GROUP_KEYS.map((group, i) => (
               <textPath key={group} href="#wheel-path" startOffset={`${12.5 + i * 25}%`} textAnchor="middle">
                 {GROUP_LABELS[group].toUpperCase()}

@@ -50,11 +50,12 @@ The contact form's send dialog is the honest version.
 ```text
 src/
 ├── components/
+│   ├── collection/    # EmptyCollection
 │   ├── contact/       # ContactForm, FormField
 │   ├── home/          # GroupWheel, DimensionsSection, DimensionCard
 │   ├── layout/        # AppLayout, Navigation, Footer, Logo, ThemeToggle
-│   ├── personality/   # PersonalityCard, PersonalityGrid, GroupFilters
-│   └── ui/            # ConfirmDialog, Toast, ResultStatus, SearchField, SectionHeading
+│   ├── personality/   # PersonalityCard, PersonalityGrid, GroupFilters, DimensionFilterPopover
+│   └── ui/            # Button, ToggleButton, ConfirmDialog, Toast, ErrorState, ResultStatus, SearchField, SectionHeading
 ├── constants/         # Static UI data (MBTI dimensions)
 ├── context/           # CollectionContext, ConfirmContext, ToastContext
 ├── hooks/             # useFetch, useLocalStorage, useTheme, useCollectionActions
@@ -71,6 +72,8 @@ src/
 - **`App.tsx` only routes.** The shared layout lives in `AppLayout` and renders an `<Outlet />`.
 - **Global state in contexts.** The collection (`CollectionContext`) sits above the router so it persists between routes. Toasts and confirmations can be requested from any component with `useToast()` and `useConfirm()`; the latter returns a promise (`true` when confirmed).
 - **Reusable hooks.** `useFetch` centralizes loading, error and cancellation with `AbortController`; `useLocalStorage` tolerates blocked or corrupted storage.
+- **Tailwind v4 styling.** Theme colors are declared as tokens in `@theme` (`bg-surface`, `text-muted`, `border-line`, `bg-accent`...) that point at CSS variables, so light/dark mode switches on its own. Each MBTI group color is a `tone-*` utility (`@utility`) exposing `bg-tone-soft` and `text-tone-strong`. Buttons are reused through `Button`, `LinkButton` and `ToggleButton`.
+- **`useFetch` with `async/await`**, loading, error and empty states, and cancellation with `AbortController`.
 - **English naming** across the codebase (folders, components, functions and variables).
 
 ## Deployment

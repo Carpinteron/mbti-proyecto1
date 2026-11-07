@@ -32,27 +32,26 @@ function Toast({ toast, onClose }: Props) {
   const style = styles[toast.kind];
   return (
     <div
-      key={toast.id}
-      role={toast.kind === 'error' ? 'alert' : 'status'}
-      aria-live={toast.kind === 'error' ? 'assertive' : 'polite'}
+      // Errors interrupt the user (role="alert"); the rest are announced politely by the parent live region.
+      role={toast.kind === 'error' ? 'alert' : undefined}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       style={{ '--t-color': style.color } as CSSProperties}
-      className={`toast-in fixed inset-x-3 bottom-3 z-50 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[26rem] ${paused ? 'toast-paused' : ''}`}
+      className="pointer-events-auto animate-toast-in motion-reduce:animate-none"
     >
       {/* Card tinted with the kind color (subtle, but distinct from the page) plus a colored line on the left */}
-      <div className="flex items-center gap-4 rounded-lg border border-[var(--t-color)]/30 bg-[color-mix(in_srgb,var(--t-color)_12%,var(--surface))] py-4 pl-3 pr-3 text-[var(--text)] shadow-[0_8px_24px_-6px_var(--shadow)]">
+      <div className="flex items-center gap-4 rounded-lg border border-[var(--t-color)]/30 bg-[color-mix(in_srgb,var(--t-color)_12%,var(--surface))] py-4 pl-3 pr-3 text-fg shadow-pop">
         <span className="w-1 self-stretch rounded-full bg-[var(--t-color)]" aria-hidden="true" />
         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--t-color)] text-white">
           <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{style.icon}</svg>
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-base font-semibold">{style.title}</p>
-          <p className="mt-0.5 text-sm leading-snug text-[var(--muted)] [overflow-wrap:anywhere]">{toast.message}</p>
+          <p className="mt-0.5 text-sm leading-snug text-muted [overflow-wrap:anywhere]">{toast.message}</p>
         </div>
-        <button type="button" onClick={onClose} aria-label="Close notification" className="grid size-8 shrink-0 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-[var(--t-color)]">
+        <button type="button" onClick={onClose} aria-label="Close notification" className="grid size-8 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-fg focus-visible:outline-2 focus-visible:outline-[var(--t-color)]">
           <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
         </button>
       </div>
