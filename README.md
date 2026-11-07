@@ -75,6 +75,8 @@ src/
 
 El proyecto incluye `vercel.json` con una regla de reescritura para que las rutas de React Router (por ejemplo `/types/ENFP`) funcionen al recargar la página en Vercel.
 
+https://mbti-proyecto1.vercel.app/ 
+
 ---
 
 MBTI es una herramienta para la reflexión y la comunicación, no un diagnóstico psicológico ni una etiqueta definitiva.
