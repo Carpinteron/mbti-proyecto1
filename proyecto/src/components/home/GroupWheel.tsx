@@ -1,6 +1,6 @@
 import { GROUP_KEYS, GROUP_LABELS } from '../../utils/groups';
 
-const BRAIN_IMAGE = '/Imagen2.svg';
+const BRAIN_IMAGE = '/Imagen3.png';
 
 // Ring: center radius 285, thickness 72 → the text runs along the middle of the stroke.
 const RADIUS = 285;
@@ -39,7 +39,7 @@ function GroupWheel() {
           </text>
         </g>
       </svg>
-      <img src={BRAIN_IMAGE} alt="" className="absolute left-1/2 top-1/2 w-[33rem] max-w-none -translate-x-1/2 -translate-y-1/2 drop-shadow-2xl" />
+      <img src={BRAIN_IMAGE} alt="" className="absolute left-1/2 top-1/2 w-[26rem] max-w-none -translate-x-1/2 -translate-y-1/2 drop-shadow-2xl" />
     </div>
   );
 }
