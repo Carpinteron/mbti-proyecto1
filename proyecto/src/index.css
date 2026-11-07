@@ -22,11 +22,11 @@
   /* Single accent: actions, links and collection */
   --accent:    hsl(340 65% 52%);
   --on-accent: hsl(0 0% 100%);
-  --danger:    hsl(355 65% 45%);
+  --danger:    hsl(340 48% 55%);
   /* Feedback states (toasts, validation) */
   --success:   hsl(152 55% 32%);
   --success-soft: hsl(150 50% 94%);
-  --danger-soft:  hsl(355 80% 96%);
+  --danger-soft:  hsl(340 55% 96%);
   --info:      hsl(212 70% 42%);
   --info-soft: hsl(210 80% 95%);
   /* Grupos MBTI: fondo suave + tono fuerte */
@@ -51,10 +51,10 @@
   --on-chrome: hsl(220 30% 94%);
   --accent:    hsl(340 80% 70%);
   --on-accent: hsl(225 20% 10%);
-  --danger:    hsl(355 85% 72%);
+  --danger:    hsl(340 58% 72%);
   --success:   hsl(150 55% 65%);
   --success-soft: hsl(152 30% 16%);
-  --danger-soft:  hsl(355 35% 18%);
+  --danger-soft:  hsl(340 28% 20%);
   --info:      hsl(210 85% 72%);
   --info-soft: hsl(212 35% 18%);
   --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);
@@ -79,10 +79,10 @@
     --on-chrome: hsl(220 30% 94%);
     --accent:    hsl(340 80% 70%);
     --on-accent: hsl(225 20% 10%);
-    --danger:    hsl(355 85% 72%);
+    --danger:    hsl(340 58% 72%);
   --success:   hsl(150 55% 65%);
   --success-soft: hsl(152 30% 16%);
-  --danger-soft:  hsl(355 35% 18%);
+  --danger-soft:  hsl(340 28% 20%);
   --info:      hsl(210 85% 72%);
   --info-soft: hsl(212 35% 18%);
     --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);

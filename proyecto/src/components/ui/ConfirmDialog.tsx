@@ -29,7 +29,7 @@ function ConfirmDialog({ open, title, message, confirmLabel = 'Confirm', cancelL
 
   const color = tone === 'danger' ? 'var(--danger)' : 'var(--accent)';
   const botonFuerte = 'rounded-2xl px-5 py-3.5 text-[15px] font-semibold text-[var(--on-accent)] transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--d-color)] bg-[var(--d-color)]';
-  const botonSuave = 'rounded-2xl border border-[var(--d-color)] px-5 py-3.5 text-[15px] font-semibold text-[var(--d-color)] transition hover:bg-[var(--d-color)]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--d-color)]';
+  const botonSuave = 'rounded-2xl border border-[var(--border)] px-5 py-3.5 text-[15px] font-semibold text-[var(--muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--muted)]';
 
   // ====================== DARK PATTERN INTENCIONAL ======================
   // When darkPattern = true two deceptive design techniques are applied, on purpose
@@ -43,7 +43,9 @@ function ConfirmDialog({ open, title, message, confirmLabel = 'Confirm', cancelL
   const confirmClass = darkPattern
     ? 'px-2 py-1 text-xs text-[var(--muted)] underline underline-offset-4 hover:text-[var(--text)]'
     : botonFuerte;
-  const cancelClass = darkPattern ? botonFuerte : botonSuave;
+  const cancelClass = darkPattern
+    ? 'rounded-2xl bg-[var(--danger)]/65 px-5 py-3.5 text-[15px] font-semibold text-[var(--text)] transition hover:bg-[var(--danger)]/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--danger)]'
+    : botonSuave;
 
   return (
     <dialog
