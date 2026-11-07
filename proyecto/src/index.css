@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ===== Paleta MBTI =====
+   Base neutra (crema / azul-gris) + un color apagado por grupo:
+   Analysts lavanda · Diplomats salvia · Sentinels azul cielo · Explorers mantequilla.
+   El rosa es el único acento. Dark Mode guide: tokens en :root,
+   tema con data-theme y prefers-color-scheme como respaldo. */
+
+:root {
+  color-scheme: light;
+  /* Base neutra */
+  --page-bg:   hsl(40 30% 97%);
+  --surface:   hsl(40 20% 100%);
+  --surface-2: hsl(40 20% 93%);
+  --text:      hsl(230 25% 14%);
+  --muted:     hsl(228 10% 40%);
+  --border:    hsl(230 20% 14% / 0.12);
+  --shadow:    hsl(230 30% 20% / 0.12);
+  /* Navbar y footer */
+  --chrome:    hsl(230 25% 14%);
+  --on-chrome: hsl(40 30% 97%);
+  /* Single accent: actions, links and collection */
+  --accent:    hsl(340 65% 52%);
+  --on-accent: hsl(0 0% 100%);
+  --danger:    hsl(355 65% 45%);
+  /* Feedback states (toasts, validation) */
+  --success:   hsl(152 55% 32%);
+  --success-soft: hsl(150 50% 94%);
+  --danger-soft:  hsl(355 80% 96%);
+  --info:      hsl(212 70% 42%);
+  --info-soft: hsl(210 80% 95%);
+  /* Grupos MBTI: fondo suave + tono fuerte */
+  --analysts-soft:   hsl(265 45% 92%);  --analysts-strong:  hsl(265 35% 42%);
+  --diplomats-soft:  hsl(150 35% 90%);  --diplomats-strong: hsl(150 35% 30%);
+  --sentinels-soft:  hsl(200 50% 91%);  --sentinels-strong: hsl(200 45% 33%);
+  --explorers-soft:  hsl(45 70% 88%);   --explorers-strong: hsl(38 60% 32%);
+  --on-group:  hsl(0 0% 100%);
+}
+
+/* Oscuro elegido por el usuario */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg:   hsl(225 20% 10%);
+  --surface:   hsl(225 18% 15%);
+  --surface-2: hsl(225 16% 20%);
+  --text:      hsl(220 30% 94%);
+  --muted:     hsl(222 14% 68%);
+  --border:    hsl(0 0% 100% / 0.1);
+  --shadow:    hsl(0 0% 0% / 0.45);
+  --chrome:    hsl(225 18% 15%);
+  --on-chrome: hsl(220 30% 94%);
+  --accent:    hsl(340 80% 70%);
+  --on-accent: hsl(225 20% 10%);
+  --danger:    hsl(355 85% 72%);
+  --success:   hsl(150 55% 65%);
+  --success-soft: hsl(152 30% 16%);
+  --danger-soft:  hsl(355 35% 18%);
+  --info:      hsl(210 85% 72%);
+  --info-soft: hsl(212 35% 18%);
+  --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);
+  --diplomats-soft:  hsl(150 20% 20%);  --diplomats-strong: hsl(150 45% 72%);
+  --sentinels-soft:  hsl(200 25% 20%);  --sentinels-strong: hsl(200 60% 75%);
+  --explorers-soft:  hsl(42 25% 20%);   --explorers-strong: hsl(45 75% 72%);
+  --on-group:  hsl(225 20% 10%);
+}
+
+/* Oscuro por preferencia del sistema (si el usuario no ha elegido) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --page-bg:   hsl(225 20% 10%);
+    --surface:   hsl(225 18% 15%);
+    --surface-2: hsl(225 16% 20%);
+    --text:      hsl(220 30% 94%);
+    --muted:     hsl(222 14% 68%);
+    --border:    hsl(0 0% 100% / 0.1);
+    --shadow:    hsl(0 0% 0% / 0.45);
+    --chrome:    hsl(225 18% 15%);
+    --on-chrome: hsl(220 30% 94%);
+    --accent:    hsl(340 80% 70%);
+    --on-accent: hsl(225 20% 10%);
+    --danger:    hsl(355 85% 72%);
+  --success:   hsl(150 55% 65%);
+  --success-soft: hsl(152 30% 16%);
+  --danger-soft:  hsl(355 35% 18%);
+  --info:      hsl(210 85% 72%);
+  --info-soft: hsl(212 35% 18%);
+    --analysts-soft:   hsl(265 25% 22%);  --analysts-strong:  hsl(265 60% 80%);
+    --diplomats-soft:  hsl(150 20% 20%);  --diplomats-strong: hsl(150 45% 72%);
+    --sentinels-soft:  hsl(200 25% 20%);  --sentinels-strong: hsl(200 60% 75%);
+    --explorers-soft:  hsl(42 25% 20%);   --explorers-strong: hsl(45 75% 72%);
+    --on-group:  hsl(225 20% 10%);
+  }
+}
+
+/* Every element with .tone-x exposes --g-soft / --g-strong */
+.tone-analysts  { --g-soft: var(--analysts-soft);  --g-strong: var(--analysts-strong); }
+.tone-diplomats { --g-soft: var(--diplomats-soft); --g-strong: var(--diplomats-strong); }
+.tone-sentinels { --g-soft: var(--sentinels-soft); --g-strong: var(--sentinels-strong); }
+.tone-explorers { --g-soft: var(--explorers-soft); --g-strong: var(--explorers-strong); }
+
+.dimension-split-left {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 2rem) 100%, 0 100%);
+}
+
+.dimension-split-right {
+  clip-path: polygon(2rem 0, 100% 0, 100% 100%, 0 100%);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  transition: background-color .3s, color .3s;
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Toast: entra desde abajo y barra de progreso del auto-dismiss */
+@keyframes toast-in { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+@keyframes toast-progress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+.toast-in { animation: toast-in .28s cubic-bezier(.2,.8,.2,1) both; }
+.toast-progress { transform-origin: left; animation: toast-progress linear forwards; }
+.toast-paused .toast-progress { animation-play-state: paused; }
+
+/* Modal: aparece con un leve zoom */
+@keyframes dialog-in { from { opacity: 0; transform: translateY(8px) scale(.96); } }
+dialog[open] { animation: dialog-in .22s cubic-bezier(.2,.8,.2,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-in, dialog[open] { animation: none; }
+}
+
+/* Ruleta del header: tambor 3D de 4 caras que gira */
+@keyframes roulette {
+  0%, 18%   { transform: rotateX(0deg); }
+  25%, 43%  { transform: rotateX(90deg); }
+  50%, 68%  { transform: rotateX(180deg); }
+  75%, 93%  { transform: rotateX(270deg); }
+  100%      { transform: rotateX(360deg); }
+}
+.roulette { perspective: 400px; }
+.roulette-drum { position: relative; height: 100%; transform-style: preserve-3d; animation: roulette 8s cubic-bezier(.6,-0.3,.4,1.3) infinite; }
+.roulette-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; backface-visibility: hidden; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .roulette-drum, .spin-slow { animation: none; }
+}
+
+/* Ruleta del navbar: el tono del grupo que contrasta con la barra */
+.roulette-track li { color: var(--g-soft); }
+[data-theme="dark"] .roulette-track li { color: var(--g-strong); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .roulette-track li { color: var(--g-strong); }
+}
+
+/* Aro del fondo del home: gira lento como una ruleta */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 60s linear infinite; transform-origin: center; }
+@media (prefers-reduced-motion: reduce) { .spin-slow { animation: none; } }
+
+/* Hero: entrada blur + fade del texto de cada grupo */
+@keyframes blur-fade { from { opacity: 0; filter: blur(10px); transform: translateY(6px); } }
+.blur-fade { animation: blur-fade 1.6s ease both; }
+@media (prefers-reduced-motion: reduce) { .blur-fade { animation: none; } }
+
+/* Nombre del grupo en el arco: recorre la circunferencia despacio al entrar */
+@keyframes arc-text-in {
+  from { opacity: 0; transform: rotate(-35deg); filter: blur(4px); }
+  to   { opacity: 1; transform: rotate(0deg);   filter: blur(0); }
+}
+.arc-text-in { transform-box: view-box; transform-origin: 350px 350px; animation: arc-text-in 4s cubic-bezier(.45,0,.25,1) both; }
+@media (prefers-reduced-motion: reduce) { .arc-text-in { animation: none; } }
+
+/* Home wheel: a single continuous rotation for segments + labels */
+@keyframes wheel-spin { to { transform: rotate(360deg); } }
+.wheel-spin { transform-box: view-box; transform-origin: 350px 350px; animation: wheel-spin 75s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .wheel-spin { animation: none; } }

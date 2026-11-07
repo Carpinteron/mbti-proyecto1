@@ -1,0 +1,30 @@
+import { Link } from 'react-router';
+
+/** Friendly empty state shown when nothing has been saved yet. */
+function EmptyCollection() {
+  return (
+    <div className="mx-auto grid max-w-5xl items-center gap-8 py-8 md:grid-cols-2 md:gap-12" role="status">
+      <div className="text-center md:text-left">
+        <h2 className="text-4xl font-light leading-tight sm:text-5xl">Your collection is empty</h2>
+        <p className="mx-auto mt-4 max-w-sm text-[var(--muted)] md:mx-0">
+          Save the personalities you want to revisit and they will show up here.
+        </p>
+        <Link
+          to="/types"
+          className="mt-8 inline-block rounded-full bg-[var(--accent)] px-10 py-4 font-bold text-[var(--on-accent)] shadow-lg transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+        >
+          Explore the types →
+        </Link>
+      </div>
+      <img
+        src="/9ef6e14bf142170fd519bfdaef8249ee.png"
+        alt="Illustration of diverse personalities gathered around a campfire"
+        width={1400}
+        height={1200}
+        className="mx-auto w-full max-w-md select-none md:max-w-none"
+      />
+    </div>
+  );
+}
+
+export default EmptyCollection;
